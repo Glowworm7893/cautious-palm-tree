@@ -1,0 +1,14 @@
+Last.Sim =
+CALCULATE(
+    MAX('Sim.Schedule'[Start Time]),
+    FILTER(
+        'Sim.Schedule',
+        'Sim.Schedule'[Start Time] <= NOW()
+    )
+)
+Last.User = 
+LOOKUPVALUE(
+    'Sim.Schedule'[Lead Facilitator.title],
+    'Sim.Schedule'[Start Time],
+    [Last.Sim]
+)

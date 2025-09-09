@@ -1,3 +1,4 @@
+//Find the last Sim Run
 Last.Sim =
 CALCULATE(
     MAX('Sim.Schedule'[Start Time]),
@@ -6,9 +7,28 @@ CALCULATE(
         'Sim.Schedule'[Start Time] <= NOW()
     )
 )
+
+//e.g of then using Last.Sim to return the Lead Facilitatior
 Last.User = 
 LOOKUPVALUE(
     'Sim.Schedule'[Lead Facilitator.title],
     'Sim.Schedule'[Start Time],
     [Last.Sim]
+)
+
+//Find the nexct sim to run
+Next.Sim =
+CALCULATE(
+    MIN('Sim.Schedule'[Start Time]),
+    FILTER(
+        'Sim.Schedule',
+        'Sim.Schedule'[Start Time] <= NOW()
+    )
+)
+//e.g of then using Next.Sim to return the Next Status
+Next.Status = 
+LOOKUPVALUE(
+    'Sim.Schedule'[Status],
+    'Sim.Schedule'[Start Time],
+    [Next.Sim]
 )
